@@ -2,7 +2,9 @@
 
 A small generative design pipeline. A parametric mounting hub is driven from Python through the Fusion 360 API, 15 design variants are generated automatically, and each is evaluated for mass and sideways stiffness. The quick stiffness estimate is then checked against finite element analysis in FreeCAD, which shows where the estimate holds up and where it breaks down.
 
-![Baseline design](images/baseline.png)
+<p align="center">
+  <img src="images/baseline.png" width="700" alt="Baseline design">
+</p>
 
 ## The question
 
@@ -41,13 +43,23 @@ Fillets and chamfers were excluded from the study. Their edges change with rib c
 
 15 variants: `rib_count` of 3, 4 and 5, and `rib_thickness` of 3 to 7 mm. All 15 rebuilt without errors.
 
-![Mass against rib thickness](images/mass_vs_thickness.png)
+<p align="center">
+  <img src="images/mass-against-rib-thickness.png" width="700" alt="Mass against rib thickness">
+</p>
 
 Mass rises linearly with wall thickness. The step from 4 to 5 ribs adds less mass than the step from 3 to 4, because ribs overlap more near the hub as they crowd together, and overlapping material only counts once.
 
+<p align="center">
+  <img src="images/design-space.png" width="700" alt="3D design space: rib count, wall thickness and mass">
+</p>
+
+Each dot is one generated design, positioned by its rib count, wall thickness and mass.
+
 ## Stiffness against mass
 
-![Stiffness against mass](images/stiffness_vs_mass.png)
+<p align="center">
+  <img src="images/stiffness-against-mass-circles-on-the-pa.png" width="700" alt="Stiffness against mass">
+</p>
 
 Twelve of the fifteen designs sit on the Pareto front. The three that do not are each beaten by a design with more, thinner ribs:
 
@@ -69,8 +81,8 @@ The two designs compared, 3 ribs at 6 mm and 5 ribs at 4 mm, have almost identic
 | 5 ribs, 4 mm | 308.6 g | 765 kN/mm | 581 kN/mm | +31.6% | 98 MPa |
 
 <p align="center">
-  <img src="images/fea_ribs3_t6.png" width="45%" alt="FEA displacement, 3 ribs 6 mm">
-  <img src="images/fea_ribs5_t4.png" width="45%" alt="FEA displacement, 5 ribs 4 mm">
+  <img src="images/fea_ribs3_t6.png" height="320" alt="FEA displacement, 3 ribs 6 mm">
+  <img src="images/fea_ribs5_t4.png" height="320" alt="FEA displacement, 5 ribs 4 mm">
 </p>
 <p align="center"><em>Displacement under a 1000 N sideways load, on the same colour scale. Left: 3 ribs, 6 mm. Right: 5 ribs, 4 mm.</em></p>
 
@@ -125,3 +137,4 @@ images/
 
 Fusion 360 and its Python API, Python (pandas, NumPy, Plotly), FreeCAD FEM with CalculiX and Gmsh.
 
+*Fiona Topore*
