@@ -1,0 +1,3 @@
+rib_count,rib_thickness_mm,fea_displacement_um,fea_max_stress_MPa,fea_stiffness_kN_per_mm,mass_g,estimated_stiffness_kN_per_mm,estimate_error_pct
+3,6,1.67,106.46,598.8,309.22,729.0,21.7
+5,4,1.72,98.21,581.4,308.58,765.0,31.6
