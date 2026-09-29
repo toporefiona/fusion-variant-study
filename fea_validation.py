@@ -5,10 +5,10 @@ import pandas as pd
 FORCE_N = 1000
 
 fea = pd.DataFrame({
-    'rib_count': [3, 5],
-    'rib_thickness_mm': [6, 4],
-    'fea_displacement_um': [1.67, 1.72],
-    'fea_max_stress_MPa': [106.46, 98.21],
+    'rib_count': [5, 4],
+    'rib_thickness_mm': [5, 6],
+    'fea_displacement_um': [0.28625, 0.29593],
+    'fea_max_stress_MPa': [3.31, 3.30],
 })
 
 fea['fea_stiffness_kN_per_mm'] = round(
