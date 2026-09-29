@@ -1,10 +1,11 @@
 # Parametric Rib Study: Automated Design Exploration in Fusion 360
 
-A small generative design pipeline. A parametric mounting hub is driven from Python through the Fusion 360 API, 15 design variants are generated automatically, and each is evaluated for mass and sideways stiffness. The quick stiffness estimate is then checked against finite element analysis in FreeCAD, which shows where the estimate holds up and where it breaks down.
-
 <p align="center">
-  <img src="images/baseline.png" width="700" alt="Baseline design">
+  <img src="images/15_variants.gif" width="700" alt="The 15 variants rebuilding automatically">
 </p>
+<p align="center"><em>All 15 variants generated automatically by the Python script.</em></p>
+
+A small generative design pipeline. A parametric mounting hub is driven from Python through the Fusion 360 API, 15 design variants are generated automatically, and each is evaluated for mass and sideways stiffness. The quick stiffness estimate is then checked against finite element analysis in FreeCAD, which shows where the estimate holds up and where it breaks down.
 
 ## The question
 
@@ -26,6 +27,11 @@ The base geometry follows a Fusion 360 tutorial part. The work in this project i
 
 The tutorial version could not change its rib count, because the ribs were drawn and trimmed as sketch lines. I rebuilt it so that a single rib is a solid feature, and the slots and bolt holes are patterned features, all driven by `rib_count`. The bolt holes are positioned at an angle of `180 deg / rib_count`, so they stay centred between the ribs for any rib count.
 
+<p align="center">
+  <img src="images/parametric-rib-study.gif" width="700" alt="Building the parametric model step by step">
+</p>
+<p align="center"><em>The model built step by step: base, hub, one rib, then patterned slots and holes driven by rib_count.</em></p>
+
 | Parameter | Baseline | Role |
 |---|---|---|
 | `rib_count` | 3 | Number of ribs, slots and bolt holes |
@@ -36,6 +42,11 @@ The tutorial version could not change its rib count, because the ribs were drawn
 | `hub_diameter` | 26 mm | Diameter of the central hub |
 
 Rib width is `slot_width + 2 * rib_thickness`, and the slot depth is linked to `rib_height`.
+
+<p align="center">
+  <img src="images/baseline.png" width="700" alt="Baseline design">
+</p>
+<p align="center"><em>The baseline design: 3 ribs, 5 mm walls.</em></p>
 
 Fillets and chamfers were excluded from the study. Their edges change with rib count (with three ribs a thin strip of hub separates adjacent walls, with four or more the walls meet directly), so they cannot follow the pattern reliably. Their effect on mass is negligible.
 
