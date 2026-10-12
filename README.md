@@ -126,6 +126,26 @@ The stricter clearance rule removes the three 5 rib designs, where the ribs sit 
 
 **Checking the output.** The hole coordinates are calculated from the parameters, not measured. I checked them against the model with Fusion's Measure tool: hole 2 measured at Z = −33.00 mm, Y = 0.00 mm, matching the sheet exactly.
 
+## Machining simulation
+
+<p align="center"><img src="images/simulation.gif" width="700"></p>
+
+The chosen design was programmed for CNC milling in Fusion 360's Manufacture workspace, cut from an 84 mm round bar:
+
+| Operation | Tool | Purpose |
+|---|---|---|
+| 2D Adaptive Roughing | 6 mm flat end mill | Clears between the ribs and inside the slots |
+| 2D Contour | 16 mm flat end mill | Cuts the outside profile in 5 mm layers |
+| Bore | 6 mm flat end mill | Cuts the counterbores |
+| Drill | Drill | Drills the bolt holes |
+| Bore | 16 mm flat end mill | Cuts the centre hole |
+
+Fusion's verification reports **0 collisions**. Getting there took several fixes, and each one taught me something about designing for manufacture:
+
+- **Holes in a selected floor are treated as islands.** The first roughing pass left a column of metal above each bolt hole. Selecting the floor boundaries as open chains closed by the stock fixed it.
+- **A round cutter cannot make a sharp inside corner.** The tool leaves material equal to its radius in every inside corner, so the design now has 3.5 mm corner fillets, larger than the 3 mm tool radius. This is a manufacturing rule I would add to the configurator next, alongside the bolt hole clearance.
+- **Tool reach matters.** The 6 mm cutter's 20 mm cutting length only just covers the rib height, so the deep cuts use a 16 mm tool.
+
 ### How this maps to offsite manufacturing
 
 | This project | Offsite manufacturing |
