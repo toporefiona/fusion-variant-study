@@ -110,6 +110,31 @@ Both designs were simulated in FreeCAD with CalculiX under identical conditions:
 3. **Peak stress is almost identical and very low** (about 3.3 MPa at 1000 N), so strength does not govern this design. Stiffness per gram does.
 4. **Buildability changed the design.** A third of the original variants could not be manufactured, which forced a larger base and a wider hole pattern.
 
+## From requirement to production files
+
+The study answers "which design is best?". The next step was to automate the whole route from a requirement to the files a manufacturer needs, with no manual step in between.
+
+1. **`configurator.py`** takes a stiffness requirement and a minimum bolt hole clearance, the manufacturer's own rule. It removes designs that break the rule, removes designs that are not stiff enough, and returns the lightest one left. It saves the choice to `chosen_design.json`.
+2. **`production_pack.py`**, a Fusion 360 script, reads that choice, rebuilds the design in Fusion and exports a production pack: a STEP file, a sheet of bolt hole coordinates, and a summary of dimensions and mass.
+
+| Requirement | Clearance rule | Rejected by rule | Rejected as too flexible | Chosen design |
+|---|---|---|---|---|
+| 3000 kN/mm | 2 mm | 0 | 9 | 3 ribs, 7 mm, 531.2 g |
+| 3000 kN/mm | 5 mm | 3 | 9 | 3 ribs, 7 mm, 531.2 g |
+
+The stricter clearance rule removes the three 5 rib designs, where the ribs sit closest to the bolt holes. The chosen design is unaffected because it has 11.6 mm of clearance.
+
+**Checking the output.** The hole coordinates are calculated from the parameters, not measured. I checked them against the model with Fusion's Measure tool: hole 2 measured at Z = −33.00 mm, Y = 0.00 mm, matching the sheet exactly.
+
+### How this maps to offsite manufacturing
+
+| This project | Offsite manufacturing |
+|---|---|
+| Design parameters | The building design |
+| Clearance rule | The factory's product rules |
+| Configurator | Automatic project set up |
+| Production pack | Production drawings and machine files |
+
 ## Lessons
 
 - **Check buildability, not just performance.** The original study looked complete until the geometry was checked for clashes. Adding the rule turned it into a real design constraint rather than an afterthought.
@@ -141,6 +166,9 @@ fea_validation.csv                     Estimate against FEA
 ribs5_t5.step, ribs5_t5.FCStd          FEA model, 5 ribs 5 mm
 ribs4_t6.step, ribs4_t6.FCStd          FEA model, 4 ribs 6 mm
 images/                                Charts, screenshots and animations
+configurator.py                        Picks the lightest design that meets a stiffness requirement and a clearance rule
+production_pack.py                     Fusion script that rebuilds the chosen design and exports the production pack
+production/                            Generated production packs, one folder per design
 ```
 
 ## How to run
@@ -148,6 +176,8 @@ images/                                Charts, screenshots and animations
 1. **Variant study:** open the parametric design in Fusion 360 and run `variant_study.py` from Utilities, Add-Ins, Scripts and Add-Ins. Results are saved to `variant_results.csv`.
 2. **Analysis:** install the dependencies with `pip install pandas plotly numpy`, then run `plot_results.py`, `add_stiffness.py` and `fea_validation.py` in that order.
 3. **FEA:** open the `.FCStd` files in FreeCAD 1.x with the FEM workbench.
+4. **Configurator:** run `python configurator.py` and enter a stiffness requirement and a minimum clearance. The choice is saved to `chosen_design.json`.
+5. **Production pack:** open the parametric design in Fusion 360 and run `production_pack.py`. Set the `FOLDER` line to your own project folder first.
 
 ## Tools
 

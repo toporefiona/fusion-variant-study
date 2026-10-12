@@ -1,0 +1,4 @@
+hole,x_mm,y_mm,diameter_mm,cbore_diameter_mm,cbore_depth_mm
+1,16.5,28.58,7.5,10.0,2.0
+2,-33.0,0.0,7.5,10.0,2.0
+3,16.5,-28.58,7.5,10.0,2.0

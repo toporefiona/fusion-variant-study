@@ -43,7 +43,8 @@ def main(): #this function runs the configurator and talks to the user
     print(f"  Clearance: {best[CLEARANCE_COL]:.1f} mm")
     print(f"  Mass: {best['mass_g']:.1f} g")
     print(f"  Stiffness: {best[STIFFNESS_COL]:.0f} kN/mm")
+    best[['rib_count', 'rib_thickness_mm']].to_json('chosen_design.json')
 
 
-if __name__ == '__main__': #checks if the script is being run directly
-    main() #calls the main function if the script is run directly
+if __name__ == '__main__':
+    main()
